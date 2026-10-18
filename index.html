@@ -4,11 +4,11 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CleanAir Routes · Chennai</title>
 <meta name="description" content="Chennai PM2.5 forecast and lowest-exposure routing for asthma patients, elders and children. Built on IBM LinuxONE for the IBM Z Datathon 2026.">
-<link rel="stylesheet" href="assets/vendor/leaflet.css">
-<script src="assets/vendor/leaflet.js"></script>
-<script src="assets/vendor/chart.umd.js"></script>
-<script src="data/meta.js"></script><script src="data/forecast.js"></script><script src="data/metrics.js"></script>
-<script src="data/genai.js"></script><script src="data/graph.js"></script><script src="assets/engine.js"></script>
+<link rel="stylesheet" href="leaflet.css">
+<script src="leaflet.js"></script>
+<script src="chart.umd.js"></script>
+<script src="meta.js"></script><script src="forecast.js"></script><script src="metrics.js"></script>
+<script src="genai.js"></script><script src="graph.js"></script><script src="engine.js"></script>
 <style>
 :root{--bg:#f6f7f4;--panel:#fff;--ink:#1d2421;--muted:#5d6762;--line:#dfe3df;--accent:#0f6e5c;--fast:#6b7280;--clean:#0f6e5c;--bal:#2563eb}
 *{box-sizing:border-box}body{margin:0;font:14px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
@@ -62,7 +62,8 @@ table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:5px 4px;t
 <script>
 const $=id=>document.getElementById(id);let META,FC,pts=[],layers=[],stLayer,chart,timelineChart;
 const map=L.map('map').setView([12.99,80.225],13);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+L.Icon.Default.imagePath='./';
+L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:20,subdomains:'abcd',attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
 const cat=v=>v<=30?'Good':v<=60?'Satisfactory':v<=90?'Moderate':v<=120?'Poor':v<=250?'Very Poor':'Severe';
 const col=v=>META.colors[cat(v)];
 async function j(u,o){return CA.api(u,o)}
