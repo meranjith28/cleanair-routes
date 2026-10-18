@@ -63,7 +63,12 @@ table{width:100%;border-collapse:collapse;font-size:13px}td,th{padding:5px 4px;t
 const $=id=>document.getElementById(id);let META,FC,pts=[],layers=[],stLayer,chart,timelineChart;
 const map=L.map('map').setView([12.99,80.225],13);
 L.Icon.Default.imagePath='./';
-L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{maxZoom:20,subdomains:'abcd',attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors © <a href="https://carto.com/attributions">CARTO</a>'}).addTo(map);
+(location.protocol.startsWith('http')
+  // on the website: standard OpenStreetMap tiles (allowed for normal web pages)
+  ? L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'})
+  // opened as a local file (offline demo): Esri street map, which allows this
+  : L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Tiles © Esri · Map data © OpenStreetMap contributors'})
+).addTo(map);
 const cat=v=>v<=30?'Good':v<=60?'Satisfactory':v<=90?'Moderate':v<=120?'Poor':v<=250?'Very Poor':'Severe';
 const col=v=>META.colors[cat(v)];
 async function j(u,o){return CA.api(u,o)}
